@@ -6,7 +6,7 @@ export default class App extends Component {
     super(props)
     this.state = {
       text: 'Pizza',
-      dataSource: ['']
+      dataSource: []
     },
     this.dataSource = new ListView.DataSource({
        rowHasChanged: (r1, r2) => r1 !== r2
@@ -16,7 +16,7 @@ export default class App extends Component {
   }
   
   render() {
-    const rows = this.dataSource.cloneWithRows(this.state.dataSource || [])
+    const rows = this.dataSource.cloneWithRows(this.state.dataSource)
     return (
       <View style={styles.container}>
         <Text style={styles.paragraph}>
@@ -45,14 +45,14 @@ export default class App extends Component {
     return fetch('https://api.nal.usda.gov/ndb/search/?format=json&q='+ this.state.text +'&sort=n&max=25&offset=0&api_key=7tUFd3p3se0gUepC4xcqRuPmo745qb1KcahdfleP')
       .then((response) => response.json())
       .then((responseJson) => {
-        this.setState({
-          dataSource: responseJson.list.item,
-        }, function() {
-          // do something with new state
-        });
+          this.setState({
+            dataSource: responseJson.list.item,
+          });
       })
       .catch((error) => {
-        console.error(error);
+          this.setState({
+            dataSource: [{name: "No Data Found", ndbno:0}],
+          });
       });
   }
 }
