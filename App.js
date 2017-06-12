@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TextInput, ListView, Button } from 'react-native';
+import { Text, View, StyleSheet, TextInput, ListView, Button, TouchableHighlight } from 'react-native';
 
 export default class App extends Component {
   constructor(props){
@@ -36,7 +36,7 @@ export default class App extends Component {
 
         <ListView
         dataSource={rows}
-        renderRow={(rowData) => <Text>{rowData.name}, {rowData.ndbno}</Text>}
+        renderRow={(rowData) => <TouchableHighlight style={styles.button}><Text style={styles.text}>{rowData.name}</Text></TouchableHighlight>}
       />
       </View>
     );
@@ -51,7 +51,7 @@ export default class App extends Component {
       })
       .catch((error) => {
           this.setState({
-            dataSource: [{name: "No Data Found", ndbno:0}],
+            dataSource: [{name: "No Data Found", ndbno:":("}],
           });
       });
   }
@@ -71,4 +71,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#34495e',
   },
+  button: {
+    backgroundColor: '#33AAFF',
+    borderWidth: 1,
+    borderColor: "black"
+  },
+  text: {
+    color: 'white'
+  }
 });
